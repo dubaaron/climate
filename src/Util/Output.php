@@ -45,6 +45,11 @@ class Output
 
     public function __construct()
     {
+        /* Required for using CLImate library in php-cgi mode */
+        if (! defined('STDIN'))  define('STDIN',  fopen('php://stdin',  'r'));
+        if (! defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
+        if (! defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
+
         $this->add('out', new Writer\StdOut);
         $this->add('error', new Writer\StdErr);
         $this->add('buffer', new Writer\Buffer);
