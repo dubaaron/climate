@@ -215,15 +215,15 @@ class Progress extends DynamicTerminalObject
      */
     protected function getBar($length)
     {
-        set_error_handler( function($errno, $errstr) {
-                debug_print_backtrace();
-                die();
-            }, E_WARNING);
+//        set_error_handler( function($errno, $errstr) {
+//                debug_print_backtrace();
+//                die();
+//            }, E_WARNING);
 
         $bar     = str_repeat('=', $length);
         $padding = str_repeat(' ', $this->getBarStrLen() - $length);
 
-        restore_error_handler();
+//        restore_error_handler();
 
         return "{$bar}>{$padding}";
     }
