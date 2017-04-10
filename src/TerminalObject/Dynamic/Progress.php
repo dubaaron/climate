@@ -162,9 +162,18 @@ class Progress extends DynamicTerminalObject
             $this->first_line = false;
         }
 
-        // Move the cursor up one line and clear it to the end
-        $line_count    = (strlen($label) > 0) ? 2 : 1;
 
+        /* Determine how many lines we need to display the progress bar + label */
+        $line_count = 1; // default, if no label, need only 1 line
+        $label_length = strlen($label);
+        if ($label_length > 0) {
+            $line_count += ceil($label_length / $this->util->width());
+            //dd($line_count);
+        }
+        //$line_count    = (strlen($label) > 0) ? 2 : 1;
+
+        /* Move the cursor up the appropriate amount of lines and clear it to
+         * the end */
         $progress_bar  = $this->util->cursor->up($line_count);
         $progress_bar .= $this->util->cursor->startOfCurrentLine();
         $progress_bar .= $this->util->cursor->deleteCurrentLine();
@@ -206,8 +215,15 @@ class Progress extends DynamicTerminalObject
      */
     protected function getBar($length)
     {
+//        set_error_handler( function($errno, $errstr) {
+//                debug_print_backtrace();
+//                die();
+//            }, E_WARNING);
+
         $bar     = str_repeat('=', $length);
         $padding = str_repeat(' ', $this->getBarStrLen() - $length);
+
+//        restore_error_handler();
 
         return "{$bar}>{$padding}";
     }
@@ -219,11 +235,12 @@ class Progress extends DynamicTerminalObject
      */
     protected function getBarStrLen()
     {
-        if (!$this->bar_str_len) {
+        if (! $this->bar_str_len) {
             // Subtract 10 because of the '> 100%' plus some padding, max 100
             $this->bar_str_len = min($this->util->width() - 10, 100);
         }
 
+        //d($this->bar_str_len);
         return $this->bar_str_len;
     }
 

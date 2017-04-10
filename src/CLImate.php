@@ -125,13 +125,26 @@ class CLImate
      */
     protected $util;
 
-    public function __construct()
+    /**
+     * Initialize this CLImate instance
+     *
+     * @param  array  $options  Array of options.  Valid option keys:
+     *      'force_linux'  bool  Whether or not to force linux environment.
+     *                           Useful if running under Cygwin, etc.
+     */
+    public function __construct($options = [])
     {
         $this->setStyle(new Style());
         $this->setRouter(new Router());
         $this->setSettingsManager(new SettingsManager());
         $this->setOutput(new Output());
-        $this->setUtil(new UtilFactory());
+
+        $system = null;
+        if (isset($options['force_linux']) && $options['force_linux']) {
+            $system = new Util\System\Linux();
+        }
+        $this->setUtil(new UtilFactory($system));
+        
         $this->setArgumentManager(new ArgumentManager());
     }
 
