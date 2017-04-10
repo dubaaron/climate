@@ -1,6 +1,6 @@
 {
-    "name": "league/climate",
-    "description": "PHP's best friend for the terminal. CLImate allows you to easily output colored text, special formats, and more.",
+    "name": "dubaaron/climate",
+    "description": "Fork of CLImate with some fixes -- PHP's best friend for the terminal. CLImate allows you to easily output colored text, special formats, and more.",
     "keywords": ["cli","php", "terminal", "command", "colors"],
     "license": "MIT",
     "authors": [
@@ -9,6 +9,10 @@
             "email": "hey@joe.codes",
             "homepage": "http://joe.codes/",
             "role": "Developer"
+        },
+        {
+            "name": "Aaron Wallentine",
+            "email": "aaron@adubsvc.net",
         }
     ],
     "require": {
